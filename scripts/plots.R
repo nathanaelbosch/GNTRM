@@ -69,3 +69,9 @@ purchase_log[match_id==id] %>% dim
 teamfights[match_id==id] %>% dim
 teamfights_players[match_id==id] %>% dim
 chat[match_id==id] %>% dim
+
+#########################################################
+# Match durations
+p <- ggplot(data=match, aes(x=duration)) +
+  geom_histogram(binwidth=60)
+p

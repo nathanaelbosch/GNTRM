@@ -4,7 +4,7 @@ library(dplyr)
 
 rm(list=ls())
 
-setwd('~/Documents/Uni/gntrm')
+setwd('~/Projekte/gntrm')
 
 ##########################################################
 # Out-game
