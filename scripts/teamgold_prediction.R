@@ -24,15 +24,15 @@ pt <- merge(pt, match[, .(match_id, radiant_win)], by='match_id')
 pt$gold_lead <- gold$gold_radiant>gold$gold_dire
 
 gold <- data.table()
-# for(i in c(5, 15, 30, 60)){
-for(i in seq(60, mean(match$duration), 60)/60){
+for(i in c(5, 15, 30, 60)){
+# for(i in seq(60, mean(match$duration), 60)/60){
   min10 <- pt[times==60*i][, .(match_id, gold_radiant, gold_dire, radiant_win)]
   min10$min <- i
   gold <- rbind(gold, min10)
 }
 
 # 10min gold with win
-p <- ggplot(gold, aes(x=gold_radiant, y=gold_dire, color=radiant_win)) +
+ggplot(gold, aes(x=gold_radiant, y=gold_dire, color=radiant_win)) +
   geom_jitter(stat='identity') +
   geom_line(data = data.frame(x = c(0,120000), y = c(0,120000)),
             aes(x = x, y = y), colour = "black", alpha=0.5) +
@@ -40,9 +40,8 @@ p <- ggplot(gold, aes(x=gold_radiant, y=gold_dire, color=radiant_win)) +
   ylab('Dire Gold') +
   xlab('Radiant Gold') +
   scale_color_discrete(name='Radiant Win') +
-  # facet_grid(~min) +
+  facet_grid(~min) +
   theme_gray()
-p
 
 #####################################################################
 # Frage: How "bad" is it to predict wins just with gold lead?
