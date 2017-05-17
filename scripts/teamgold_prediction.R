@@ -38,7 +38,7 @@ for(i in c(5, 15, 30, 60)){
 }
 
 # 10min gold with win
-p <- ggplot(gold, aes(x=gold_radiant, y=gold_dire, color=radiant_win)) +
+ggplot(gold, aes(x=gold_radiant, y=gold_dire, color=radiant_win)) +
   geom_jitter(stat='identity') +
   geom_line(data = data.frame(x = c(0,120000), y = c(0,120000)),
             aes(x = x, y = y), colour = "black", alpha=0.5) +
@@ -48,7 +48,6 @@ p <- ggplot(gold, aes(x=gold_radiant, y=gold_dire, color=radiant_win)) +
   scale_color_discrete(name='Radiant Win') +
   facet_grid(~min) +
   theme_gray()
-p
 
 #####################################################################
 # Frage: How "good" is it to predict wins just with gold lead?
