@@ -37,17 +37,23 @@ for(i in c(5, 15, 30, 60)){
   gold <- rbind(gold, min10)
 }
 
+gold$min_ <- paste(gold$min, "min") %>% factor %>% relevel("5 min")
+# levels(gold$min_) <- unique(gold$min_)
+
 # 10min gold with win
 ggplot(gold, aes(x=gold_radiant, y=gold_dire, color=radiant_win)) +
   geom_jitter(stat='identity') +
-  geom_line(data = data.frame(x = c(0,120000), y = c(0,120000)),
-            aes(x = x, y = y), colour = "black", alpha=0.5) +
+  # geom_line(data = data.frame(x = c(0,120000), y = c(0,120000)),
+  #           aes(x = x, y = y), colour = "black", alpha=0.5) +
   ggtitle('Gold per team') +
-  ylab('Dire Gold') +
-  xlab('Radiant Gold') +
-  scale_color_discrete(name='Radiant Win') +
-  facet_grid(~min) +
-  theme_gray()
+  ylab('Team 2 Gold') +
+  xlab('Team 1 Gold') +
+  scale_color_discrete(name='Team 1 wins') +
+  facet_grid(~min_) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme(plot.title = element_text(size=16),
+        axis.text=element_text(size=12),
+        axis.title=element_text(size=14))
 
 #####################################################################
 # Frage: How "good" is it to predict wins just with gold lead?
@@ -67,7 +73,13 @@ correct <- merge(correct, datapoint_count, by='minute')
 p <- ggplot(correct, aes(x=minute, y=rate)) +
   geom_line(color="red") +
   geom_bar(stat='identity', aes(x=minute, y=count), alpha=0.2) +
-  theme_gray()
+  ggtitle('Win-prediction by gold lead') +
+  ylab('Accuracy') +
+  xlab('Minute') +
+  theme_gray() +
+  theme(plot.title = element_text(size=16),
+        axis.text=element_text(size=12),
+        axis.title=element_text(size=14))
 p
 
 #####################################################################

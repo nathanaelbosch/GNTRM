@@ -4,14 +4,18 @@ library(ggplot2)
 ############################################################
 # Games per Date
 match$date <- match$start_time %>% anydate
-matches_per_day <- match %>% group_by(date) %>% count
+matches_per_day <- merge(match, cluster_regions) %>% group_by(date, region) %>% count
+matches_per_day$region %<>% sub(pattern="PW TELECOM ", replacement="")
 
-p <- ggplot(matches_per_day, aes(x=date, y=n)) +
+p <- ggplot(matches_per_day, aes(x=date, y=n, fill=region)) +
   geom_bar(stat='identity') +
   ggtitle('Games per Day') +
   ylab('Number of games') +
   xlab('Date') +
-  theme_bw()
+  theme_bw() +
+  theme(plot.title = element_text(size=16),
+        axis.text=element_text(size=12),
+        axis.title=element_text(size=14))
 p
 
 ###########################################################
@@ -72,6 +76,7 @@ chat[match_id==id] %>% dim
 
 #########################################################
 # Match durations
-p <- ggplot(data=match, aes(x=duration)) +
-  geom_histogram(binwidth=60)
+p <- ggplot(data=match, aes(x=duration/60)) +
+  geom_histogram(binwidth=1) +
+  xlab('Duration in Minutes')
 p
