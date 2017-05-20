@@ -16,7 +16,7 @@ chat_ <- merge(chat, match, by='match_id')
 chat_$radiant <- chat_$slot %in% c(0:4)
 chat_$win <- ((chat_$radiant & chat_$radiant_win) |
                   (!chat_$radiant & !chat_$radiant_win))
-chat_ <- chat_ %>% sample_n(100000)
+# chat_ <- chat_[1:100000]
 txt <- chat_ %>% group_by(match_id, win) %>%
   summarize(text=paste(key, collapse=' ')) %>% data.table
 # text <- chat$key
@@ -45,9 +45,9 @@ text_to_frequency_dt <- function(text){
   return(d)
 }
 
-d <- text_to_frequency_dt(txt[win==F])
+d <- text_to_frequency_dt(txt[win==T])
 
 set.seed(1234)
 wordcloud(words = d$word, freq = d$freq, min.freq = 1,
-          max.words=100, random.order=FALSE, rot.per=0.35, 
+          max.words=200, random.order=FALSE, rot.per=0.35, 
           colors=brewer.pal(8, "Dark2"))
