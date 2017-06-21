@@ -4,7 +4,8 @@ library(ggplot2)
 ############################################################
 # Games per Date
 match$date <- match$start_time %>% anydate
-matches_per_day <- merge(match, cluster_regions) %>% group_by(date, region) %>% count
+matches_per_day <- merge(match, cluster_regions, by='cluster') %>%
+  group_by(date, region) %>% count
 matches_per_day$region %<>% sub(pattern="PW TELECOM ", replacement="")
 
 p <- ggplot(matches_per_day, aes(x=date, y=n, fill=region)) +
@@ -20,7 +21,7 @@ p
 
 ###########################################################
 # Regions
-matches_per_region <- merge(match, cluster_regions)
+matches_per_region <- merge(match, cluster_regions, by='cluster')
 matches_per_region %<>% group_by(region) %>% count %>% data.table
 matches_per_region$region %<>% factor(levels=sort(matches_per_region$region, decreasing=T))
 p <- ggplot(matches_per_region, aes(x=region, y=n)) +
@@ -35,9 +36,9 @@ p
 ##########################################################
 # Heroes played
 # players$radiant <- players$player_slot %in% c(0,1,2,3,4)
-# players <- merge(players, match)
+# players <- merge(players, match, by='match_id')
 # players$win <- ((players$radiant & players$radiant_win) |
-#                   (!players$radiant & !players$radiant_win))
+                  # (!players$radiant & !players$radiant_win))
 heroes_ <- merge(players, hero_names, by='hero_id')
 heroes <- heroes_ %>% group_by(localized_name) %>%
   summarize(count=n(), win_percentage=mean(win)*100) %>% data.table()

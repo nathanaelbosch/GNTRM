@@ -63,11 +63,11 @@ wordcloud(words = df$word, freq = df$ltow^2,
           random.order=FALSE,
           rot.per=0.15, 
           colors=brewer.pal(8, "Dark2"),
-          scale=c(5,.5))
+          scale=c(2,.2))
 wordcloud(words = df$word, freq = 1/df$ltow^2,
           min.freq = 0,
           # max.words=100,
           random.order=FALSE,
           rot.per=0.15, 
           colors=brewer.pal(8, "Dark2"),
-          scale=c(3,.5))
+          scale=c(2,.2))

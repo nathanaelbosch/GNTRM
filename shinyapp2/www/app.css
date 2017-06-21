@@ -1,0 +1,59 @@
+.left-side, .main-sidebar,  .wrapper {
+  background-color : #04374F !important;
+}
+.sidebar-menu>li.active>a{
+  background-color:#008DCB !important;
+}
+
+.main-header .navbar {
+background-color: #05415A !important;
+}
+
+.main-header .logo {
+background-color: #05415A !important;
+}
+
+.cubismContainer .horizon .title{
+  font-weight: bold;
+}
+
+.content-wrapper{background:#042E40 !important;}
+  
+.box.box-solid.box-primary{
+  border-color:#008DCB !
+}
+.box.box-solid.box-primary > .box-header{
+  background:#008DCB !important;
+}
+  
+.main-sidebar {
+  background-image: url("http://www.horvath-partners.com/fileadmin/horvath-partners.com/templates/img/logo_2x.png");
+  background-size: auto 3rem;
+  background-position: center 95%;
+  background-color: #04374F  !important;
+  background-repeat: no-repeat;
+}
+
+.box .control-label{
+  color:#333;
+}
+  
+.box-header h1, .box-header h2, .box-header h3,.box-header h4, .box-header h5, .box-header h6 {
+  font-family: serif;
+  color:inherit;
+}
+  
+.shiny-progress .bar {
+  opacity: 1;
+  background-color: #008CC8;
+}
+.shiny-progress .progress {
+  height:12px;
+  background-color: #008CC8;
+}
+.shiny-progress .progress-text{
+  font-size: 20px;
+  right: 20px;
+  height: 36px;
+  width: 280px;
+}
