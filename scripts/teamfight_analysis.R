@@ -60,9 +60,8 @@ if( !('match' %in% ls()) ){
 tf_last <- merge(tf_last, match[, .(match_id, duration)], by='match_id')
 tf_last$win_after_tf <- tf_last$tf_win==tf_last$radiant_win
 tf_last$time_delta <- tf_last$duration-tf_last$time
-# ggplot(tf_last, aes(x=duration, y=time_delta, color=win_after_tf)) +
-#   geom_point(size=0.2) +
-#   scale_y_log10()
+ggplot(tf_last, aes(x=duration, y=time_delta, color=win_after_tf)) +
+  geom_point(size=0.2)
 
 rounding_number <- 10
 mdata <- tf_last %>% group_by(time_delta=round(time_delta/rounding_number)) %>%

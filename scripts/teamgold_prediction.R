@@ -3,7 +3,14 @@ library(magrittr)
 library(dplyr)
 library(ggplot2)
 
-init <- fun(){
+if( !('match' %in% ls()) ){
+  match <- fread('data/match.csv')
+}
+source('scripts/outliers.R')
+match <- match[!(match_id %in% outliers)]
+
+
+init <- function(){
   if( !('match' %in% ls()) ){
     match <- fread('data/match.csv')
   }
