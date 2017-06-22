@@ -28,8 +28,19 @@ init <- function(){
                    + pt$gold_t_130
                    + pt$gold_t_131
                    + pt$gold_t_132)
-  pt <- merge(pt, match[, .(match_id, radiant_win)], by='match_id')
+  pt$xp_radiant <- (pt$xp_t_0
+                      + pt$xp_t_1
+                      + pt$xp_t_2
+                      + pt$xp_t_3
+                      + pt$xp_t_4)
+  pt$xp_dire <- (pt$xp_t_128
+                   + pt$xp_t_129
+                   + pt$xp_t_130
+                   + pt$xp_t_131
+                   + pt$xp_t_132)
+    pt <- merge(pt, match[, .(match_id, radiant_win)], by='match_id')
   pt$gold_lead <- pt$gold_radiant>pt$gold_dire
+  pt$xp_lead <- pt$xp_radiant>pt$xp_dire
   pt$minute <- pt$times/60
   return(pt)
 }
@@ -79,12 +90,15 @@ datapoint_count <- pt[, .(minute, match_id)] %>%
 correct <- merge(correct, datapoint_count, by='minute')
 p <- ggplot(correct, aes(x=minute, y=rate)) +
   geom_line(color="red") +
-  geom_bar(stat='identity', aes(x=minute, y=count), alpha=0.2) +
+  geom_bar(stat='identity', aes(x=minute, y=count), alpha=0.3) +
   ggtitle('Win-prediction by gold lead') +
   ylab('Accuracy') +
   xlab('Minute') +
-  theme_gray() +
+  theme_bw() +
   theme(plot.title = element_text(size=16),
         axis.text=element_text(size=12),
-        axis.title=element_text(size=14))
+        axis.title=element_text(size=14),
+        panel.grid.major = element_line(color='darkgray'),
+        panel.grid.minor = element_line(color='gray'))
+  
 p

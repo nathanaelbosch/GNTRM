@@ -38,8 +38,9 @@ while(length(indizes)>0){
   tf$diff <- c(-1000, tf$start[-1] - tf$time[-length(tf$time)])
   indizes <- which(tf$diff<30 & tf$diff>0)
 }
-tf[, c('diff', 'start2', 'deaths_12', 'deaths22', 'gold_delta_12',
+tf[, c('diff', 'start2', 'deaths_12', 'deaths_22', 'gold_delta_12',
        'gold_delta_22', 'exp_delta_12', 'exp_delta_22') := NULL]
+tf$tf_win <- tf$deaths_2>=tf$deaths_1
 
 ################################################################################
 # First question: Do winning people win the last teamfight?
@@ -69,11 +70,19 @@ mdata <- tf_last %>% group_by(time_delta=round(time_delta/rounding_number)) %>%
 mdata$time_delta <- mdata$time_delta*rounding_number
 ggplot(mdata, aes(x=time_delta, y=ratio)) +
   geom_bar(stat='identity') +
+  coord_cartesian(ylim = c(0, 1)) +
   scale_x_continuous(
     'Time difference between last teamfight and end of game',
      breaks = seq(0, max(mdata$time_delta), 100)) +
-  scale_y_continuous('Win Probability after won teamfight') +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  ggtitle('Winning the game after winning a teamfight') +
+  scale_y_continuous('Probability') +
+  theme_bw() +
+  theme(plot.title = element_text(size=16),
+        axis.text=element_text(size=12),
+        axis.title=element_text(size=14),
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        panel.grid.major = element_line(color='darkgray'),
+        panel.grid.minor = element_line(color='gray'))
 
 # Teamfights look relevant !
 # * Even for larger deltas there is a good ratio, but sample size gets small there
