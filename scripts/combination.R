@@ -52,7 +52,7 @@ for(n in c(1:9)){
 print(n)
 
 id <- sample(c(45000:49999), 1)
-freq <- 60
+# freq <- 1
 prediction <- c()
 
 gold_predictions <- data.table(time=pt[match_id==id]$times,
@@ -62,7 +62,8 @@ tf_predictions <- data.table(time=tf[match_id==id]$time,
 predictions <- merge(gold_predictions, tf_predictions, by='time', all=T)
 
 predictions <- na.locf(predictions)
-predictions[, prediction:=apply(data.table(gold_pred, tf_pred), 1, function(x){mean(x, na.rm=T)})]
+predictions[, prediction:=apply(
+  data.table(gold_pred, tf_pred), 1, function(x){mean(x, na.rm=T)})]
 
 correct_prediction <- match[match_id==id]$radiant_win == round(
   predictions$prediction %>% tail(1))
@@ -81,3 +82,9 @@ p[[n]] <- ggplot(predictions, aes(x=time, y=prediction)) +
 }
 
 grid.arrange(p[[1]], p[[2]], p[[3]], p[[4]], p[[5]], p[[6]], p[[7]], p[[8]], p[[9]], ncol=3)
+
+"
+Prediction problem:
+When filling NAs, I assume the prediction of the other programm did not change since!
+Fix: Train the model add 'duration since' and train the model with that, while adding datapoints
+"
