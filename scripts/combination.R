@@ -104,3 +104,9 @@ for(n in c(1:9)){
 }
 
 grid.arrange(p[[1]], p[[2]], p[[3]], p[[4]], p[[5]], p[[6]], p[[7]], p[[8]], p[[9]], ncol=3)
+
+"
+Prediction problem:
+When filling NAs, I assume the prediction of the other programm did not change since!
+Fix: Train the model add 'duration since' and train the model with that, while adding datapoints
+"
